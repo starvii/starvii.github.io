@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+
+
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>容器化部署NextCloud&#43;OnlyOffice - 星落园</title>
+<meta name="description" content="">
+
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?c=c71c6c1e201ea4dcc2465e20fa2b415a06a3afa2">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?c=c71c6c1e201ea4dcc2465e20fa2b415a06a3afa2">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?c=c71c6c1e201ea4dcc2465e20fa2b415a06a3afa2">
+<link rel="alternate" href="/index.xml?c=c71c6c1e201ea4dcc2465e20fa2b415a06a3afa2" type="application/rss+xml" title="RSS" />
+<meta property="og:title" content="容器化部署NextCloud&#43;OnlyOffice - 星落园">
+</meta>
+<meta property="og:url" content="https://starvii.github.io/posts/%E5%AE%B9%E5%99%A8%E5%8C%96%E9%83%A8%E7%BD%B2nextcloud&#43;onlyoffice/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="星落园">
+<meta property="og:description" content="">
+
+<meta property="og:image" content="https://starvii.github.io//images/featured_image.jpg">
+
+<meta name="twitter:card" content="summary_large_image" /></meta>
+<meta name="twitter:site" content="@"></meta>
+<meta name="twitter:creator" content="@"></meta>
+<meta name="twitter:title" content="容器化部署NextCloud&#43;OnlyOffice - 星落园"></meta>
+<meta name="twitter:url" content="https://starvii.github.io/posts/%E5%AE%B9%E5%99%A8%E5%8C%96%E9%83%A8%E7%BD%B2nextcloud&#43;onlyoffice/"></meta>
+<meta name="twitter:description" content=""></meta>
+
+<meta property="og:image" content="https://starvii.github.io//images/featured_image.jpg">
+
+
+<link rel="stylesheet" href="/css/main.css?c=c71c6c1e201ea4dcc2465e20fa2b415a06a3afa2">
+<link rel="stylesheet" href="/css/color.css?c=c71c6c1e201ea4dcc2465e20fa2b415a06a3afa2">
+
+
+
+
+</head>
+
+<body >
+
+
+<div id="content-header" class="title">
+  
+  <a class="site-title" href="/">星落园</a>
+  
+  <span class="site-sub-title"></span>
+
+  
+
+  <div id="main-menu-nav">
+    <div id="main-menu-nav-items">
+      
+    </div>
+  </div>
+</div>
+<div id="content" class="main">
+
+
+
+
+<h2>容器化部署NextCloud&#43;OnlyOffice</h2>
+
+<span class="sub">2023-06-19</span>
+
+
+
+
+
+
+
+
+<!-- raw HTML omitted -->
+<ul>
+<li><a href="#1-%E8%AF%B4%E6%98%8E">1. 说明</a></li>
+<li><a href="#2-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C">2. 准备工作</a></li>
+<li><a href="#3-%E6%8B%89%E5%8F%96images">3. 拉取<code>images</code></a></li>
+<li><a href="#4-%E5%A4%96%E9%83%A8%E6%8C%82%E8%BD%BDnextcloud%E4%BB%A3%E7%A0%81">4. 外部挂载<code>NextCloud</code>代码</a></li>
+<li><a href="#5-%E4%BD%BF%E7%94%A8docker-compose">5. 使用<code>docker-compose</code></a></li>
+<li><a href="#6-nextcloud%E5%88%9D%E5%A7%8B%E5%8C%96">6. <code>NextCloud</code>初始化</a></li>
+<li><a href="#7-nextcloud%E4%B8%8Eonlyoffice%E9%9B%86%E6%88%90">7. <code>NextCloud</code>与<code>OnlyOffice</code>集成</a></li>
+</ul>
+<h1 id="1-说明">1. 说明</h1>
+<p>本文基于<code>Debian 10</code> / <code>docker</code> / <code>docker-compose</code>进行部署。</p>
+<p>该部署方法完成后，可迁移到<strong>无<code>Internet</code>的环境</strong>下使用，例如<strong>信息安全管理较严格的内部网络</strong>。</p>
+<p>本文源码、数据库等路径均存放在<code>/tmp/nextcloud</code>下，仅作为案例参考。正式使用时请按实际情况修改。</p>
+<h1 id="2-准备工作">2. 准备工作</h1>
+<p>较新的<code>debian</code>可使用<code>sudo apt install docker-compose</code>直接完成<code>docker</code>/<code>docker-compose</code>安装。</p>
+<hr>
+<p>如果安装失败的话，请按下述方法：</p>
+<p>debian安装<code>docker</code>请自行寻找相关教程。</p>
+<p>debian安装<code>docker-compose</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install python3 python3-pip
+</span></span><span style="display:flex;"><span>python3 -m pip install -U docker-compose
+</span></span></code></pre></div><hr>
+<p>其他<code>Linux</code>发行版请参照相关手册，此处不再赘述。</p>
+<h1 id="3-拉取images">3. 拉取<code>images</code></h1>
+<p>此处使用官方的<code>onlyoffice docs</code>镜像来作为例子，社区版本限制了在线人数。正式使用时请按实际情况修改。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker pull mariadb
+</span></span><span style="display:flex;"><span>docker pull redis
+</span></span><span style="display:flex;"><span>docker pull nextcloud
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 版本号请在 https://hub.docker.com/_/nextcloud/ 上寻找确认，需要和之后定制的源码版本一致。本文编写时使用的版本号是 26.0.1-apache</span>
+</span></span><span style="display:flex;"><span>docker pull onlyoffice/documentserver
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 此处使用官方的`onlyoffice docs`镜像来作为例子，正式使用时请按实际情况修改。</span>
+</span></span></code></pre></div><h1 id="4-外部挂载nextcloud代码">4. 外部挂载<code>NextCloud</code>代码</h1>
+<p>下载<code>nextcloud</code>源码：<code>https://github.com/nextcloud/server/releases/</code></p>
+<p><strong>注意</strong>：源码版本需要和上述<code>nextcloud docker</code>版本一致。</p>
+<p><strong>注意</strong>：直接下载源码可能缺少一些文件，如果出现<code>Composer autoloader not found</code>之类的问题，可直接从<code>nextcloud docker</code>中提取相关文件。可单独启动一个<code>nextcloud docker</code>，使用<code>tar</code>打包并保存在<code>/var/www/html</code>下，外部使用<code>wget</code>或<code>curl</code>获取。详细步骤不再展开。</p>
+<p>解压到预设路径：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tar xzvf server-26.0.1.tar.gz -C /tmp/nextcloud/server
+</span></span></code></pre></div><p>修改文件权限，确保能成功初始化：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chown -R www-data:www-data /tmp/nextcloud/server
+</span></span></code></pre></div><h1 id="5-使用docker-compose">5. 使用<code>docker-compose</code></h1>
+<p><code>docker-compose.yaml</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#34;3&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">db</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">mariadb</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">networks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">backend</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">nextcloud-onlyoffice-mariadb</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">always</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">MYSQL_ROOT_PASSWORD</span>: <span style="color:#ae81ff">NextC1oud</span> <span style="color:#75715e">#数据库初始话为root用户设置的默认密码</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">MYSQL_DATABASE</span>: <span style="color:#ae81ff">nextcloud</span> <span style="color:#75715e">#数据库名</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">MYSQL_USER</span>: <span style="color:#ae81ff">nextcloud</span> <span style="color:#75715e">#自定义数据库的用户，权限只作用于MYSQL_DATABASE配置的数据库</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">MYSQL_PASSWORD</span>: <span style="color:#ae81ff">nextcloud</span> <span style="color:#75715e">#自定义数据库的用户，权限只作用于MYSQL_DATABASE配置的数据库</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">/tmp/nextcloud/data/:/var/lib/mysql/</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">cache</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">redis</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">networks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">backend</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">nextcloud-onlyoffice-redis</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">always</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">doc</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">onlyoffice/documentserver</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">networks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">frontend</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">backend</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">onlyoffice</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">always</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;8080:80&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">web</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nextcloud</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">networks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">frontend</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">backend</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">nextcloud</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">always</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;80:80&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">/tmp/nextcloud/server/:/var/www/html/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">networks</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">frontend</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">driver</span>: <span style="color:#ae81ff">bridge</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">backend</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">driver</span>: <span style="color:#ae81ff">bridge</span>
+</span></span></code></pre></div><p>启动容器，注意，调试时不带参数<code>-d</code>以便观察输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker-compose up
+</span></span></code></pre></div><p>使用浏览器访问服务器<code>80</code>端口<code>nextcloud</code>首页和<code>8080</code>端口<code>onlyoffice</code>首页，观察是否能正常开启。<strong>注意</strong>：此处最好直接使用外部可访问的IP地址进行访问，否则初始化后信任地址会有问题。</p>
+<h1 id="6-nextcloud初始化">6. <code>NextCloud</code>初始化</h1>
+<p>开始<code>nextcloud</code>初始化，初始化选择：</p>
+<ul>
+<li>用户名：<code>自定义</code></li>
+<li>密码：<code>自定义</code></li>
+<li>存储与数据库：<code>MySQL/MariaDB</code></li>
+<li>数据库用户名：<code>nextcloud</code></li>
+<li>数据库密码：<code>nextcloud</code></li>
+<li>数据库名：<code>nextcloud</code></li>
+<li>数据库主机：<code>db:3306</code></li>
+</ul>
+<p>初始化过程可能比较漫长。</p>
+<h1 id="7-nextcloud与onlyoffice集成">7. <code>NextCloud</code>与<code>OnlyOffice</code>集成</h1>
+<p>下载<code>nextcloud</code>的<code>onlyoffice</code>插件<code>https://apps.nextcloud.com/apps/onlyoffice/</code>，<strong>注意</strong>：版本必须与源码大版本一致。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tar zxvf onlyoffice.tar.gz -C /tmp/nextcloud/server/apps/
+</span></span><span style="display:flex;"><span>chown -R www-data:www-data /tmp/nextcloud/server
+</span></span></code></pre></div><ol>
+<li>页面右上角头像 → 应用 → 已禁用的应用 → ONLYOFFICE 启用</li>
+<li>页面右上角头像 → 管理设置  → ONLYOFFICE</li>
+</ol>
+<p>通常内部使用没有<code>https</code>的需求，勾选<code>关闭证书校验(不安全)</code>，在<code>ONLYOFFICE Docs地址</code>中填入<code>http://&lt;服务器IP&gt;:8080</code>，<strong>注意</strong>：此处<code>服务器IP</code>需要外部能访问的地址。</p>
+<p>如果有问题，需要修改<code>server/config/config.php</code>文件，添加信任域。</p>
+<p>调试没问题后，再使用<code>docker-compose down &amp;&amp; docker-compose up -d</code>后台启动服务。</p>
+
+
+
+
+
+
+<hr class="block-separater">
+
+
+
+
+
+
+
+
+
+
+<div class="content-footer-item neighbor">
+	
+	<div class="prev-post">Prev: <a href="/posts/%E5%88%A9%E7%94%A8githubpages%E5%92%8Chugo%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81blog/">利用GithubPages和Hugo搭建静态blog</a></div>
+	
+	
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/single.js"></script>
+
+
+
+
+
+	</div><div id="content-footer" class="sub">
+  
+  <div class="credit">
+    Power by <a href="https://gohugo.io">Hugo</a> /
+    Theme <a href="https://github.com/michimani/simplog/">simplog</a> by <a href="https://github.com/michimani/">michimani</a>
+  </div>
+</div></body>
+
+</html>

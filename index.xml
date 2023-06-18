@@ -6,14 +6,32 @@
     <description>Recent content on 星落园</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 18 Jun 2023 04:08:30 +0800</lastBuildDate><atom:link href="https://starvii.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 19 Jun 2023 01:56:20 +0800</lastBuildDate><atom:link href="https://starvii.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>容器化部署NextCloud&#43;OnlyOffice</title>
+      <link>https://starvii.github.io/posts/%E5%AE%B9%E5%99%A8%E5%8C%96%E9%83%A8%E7%BD%B2nextcloud&#43;onlyoffice/</link>
+      <pubDate>Mon, 19 Jun 2023 01:56:20 +0800</pubDate>
+      
+      <guid>https://starvii.github.io/posts/%E5%AE%B9%E5%99%A8%E5%8C%96%E9%83%A8%E7%BD%B2nextcloud&#43;onlyoffice/</guid>
+      <description>1. 说明 2. 准备工作 3. 拉取images 4. 外部挂载NextCloud代码 5. 使用docker-compose 6. NextCloud初始化 7. NextCloud与OnlyOffice集成 1. 说明 本文基于Debian 10 / docker / docker-compose进行部署。
+该部署方法完成后，可迁移到无Internet的环境下使用，例如信息安全管理较严格的内部网络。
+本文源码、数据库等路径均存放在/tmp/nextcloud下，仅作为案例参考。正式使用时请按实际情况修改。
+2. 准备工作 较新的debian可使用sudo apt install docker-compose直接完成docker/docker-compose安装。
+如果安装失败的话，请按下述方法：
+debian安装docker请自行寻找相关教程。
+debian安装docker-compose
+sudo apt install python3 python3-pip python3 -m pip install -U docker-compose 其他Linux发行版请参照相关手册，此处不再赘述。
+3. 拉取images 此处使用官方的onlyoffice docs镜像来作为例子，社区版本限制了在线人数。正式使用时请按实际情况修改。
+docker pull mariadb docker pull redis docker pull nextcloud # 版本号请在 https://hub.docker.com/_/nextcloud/ 上寻找确认，需要和之后定制的源码版本一致。本文编写时使用的版本号是 26.0.1-apache docker pull onlyoffice/documentserver # 此处使用官方的`onlyoffice docs`镜像来作为例子，正式使用时请按实际情况修改。 4.</description>
+    </item>
+    
     <item>
       <title>利用GithubPages和Hugo搭建静态blog</title>
       <link>https://starvii.github.io/posts/%E5%88%A9%E7%94%A8githubpages%E5%92%8Chugo%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81blog/</link>
       <pubDate>Sun, 18 Jun 2023 04:08:30 +0800</pubDate>
       
       <guid>https://starvii.github.io/posts/%E5%88%A9%E7%94%A8githubpages%E5%92%8Chugo%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81blog/</guid>
-      <description>1. 准备工作 1.1. 选择合适的markdown编辑器 2. Github与repo 2.1. 创建repo 2.2. clone至本地 3. Huge 3.1. Huge下载/安装 3.2. 主题模板 3.2.1. 选择 3.2.2. 安装 3.2.3. 删除 3.3. 创建第一篇博文 3.4. 测试 3.5. 发布 4. 发布到github.io（未测试成功） 5. 一些后续想法 1. 准备工作 1.1. 选择合适的markdown编辑器 可以选用以下编辑器：
+      <description>1. 准备工作 1.1. 选择合适的markdown编辑器 2. Github与repo 2.1. 创建repo 2.2. clone至本地 3. Huge 3.1. Huge下载/安装 3.2. 主题模板 3.2.1. 选择 3.2.2. 安装 3.2.3. 删除 3.3. 创建第一篇博文 3.4. 测试 3.5. 发布 4. 发布到github.io 5. 一些后续想法 1. 准备工作 1.1. 选择合适的markdown编辑器 可以选用以下编辑器：
 VSCode + （扩展）Markdown All in One、Markdown Preview Enhanced Typora Obsidian 推荐使用第一种，虽然所见即所得的特性差一点，但免费。相关扩展也可以辅助生成标题编号。
 2. Github与repo 2.1. 创建repo 需要创建2个repo。
 第1个私有，用于保存hugo站点的配置信息与blog源文件； 第2个公开，用于保存hugo发布生成的结果，也就是真正的Github Pages，公开供外部访问的页面。 私有repo名字随意，不过推荐使用private.github.io，明确和公开repo的关联。
