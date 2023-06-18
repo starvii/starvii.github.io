@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+
+
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>利用GithubPages和Hugo搭建静态blog - 星落园</title>
+<meta name="description" content="">
+
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?c=159666fccf17814250da3a01507a5b4b51ec5962">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?c=159666fccf17814250da3a01507a5b4b51ec5962">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?c=159666fccf17814250da3a01507a5b4b51ec5962">
+<link rel="alternate" href="/index.xml?c=159666fccf17814250da3a01507a5b4b51ec5962" type="application/rss+xml" title="RSS" />
+<meta property="og:title" content="利用GithubPages和Hugo搭建静态blog - 星落园">
+</meta>
+<meta property="og:url" content="https://starvii.github.io/posts/%E5%88%A9%E7%94%A8githubpages%E5%92%8Chugo%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81blog/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="星落园">
+<meta property="og:description" content="">
+
+<meta property="og:image" content="https://starvii.github.io//images/featured_image.jpg">
+
+<meta name="twitter:card" content="summary_large_image" /></meta>
+<meta name="twitter:site" content="@"></meta>
+<meta name="twitter:creator" content="@"></meta>
+<meta name="twitter:title" content="利用GithubPages和Hugo搭建静态blog - 星落园"></meta>
+<meta name="twitter:url" content="https://starvii.github.io/posts/%E5%88%A9%E7%94%A8githubpages%E5%92%8Chugo%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81blog/"></meta>
+<meta name="twitter:description" content=""></meta>
+
+<meta property="og:image" content="https://starvii.github.io//images/featured_image.jpg">
+
+
+<link rel="stylesheet" href="/css/main.css?c=159666fccf17814250da3a01507a5b4b51ec5962">
+<link rel="stylesheet" href="/css/color.css?c=159666fccf17814250da3a01507a5b4b51ec5962">
+
+
+
+
+</head>
+
+<body >
+
+
+<div id="content-header" class="title">
+  
+  <a class="site-title" href="/">星落园</a>
+  
+  <span class="site-sub-title"></span>
+
+  
+
+  <div id="main-menu-nav">
+    <div id="main-menu-nav-items">
+      
+    </div>
+  </div>
+</div>
+<div id="content" class="main">
+
+
+
+
+<h2>利用GithubPages和Hugo搭建静态blog</h2>
+
+<span class="sub">2023-06-18</span>
+
+
+
+
+
+
+
+
+<ul>
+<li><a href="#1-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C">1. 准备工作</a>
+<ul>
+<li><a href="#11-%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84markdown%E7%BC%96%E8%BE%91%E5%99%A8">1.1. 选择合适的<code>markdown</code>编辑器</a></li>
+</ul>
+</li>
+<li><a href="#2-github%E4%B8%8Erepo">2. <code>Github</code>与<code>repo</code></a>
+<ul>
+<li><a href="#21-%E5%88%9B%E5%BB%BArepo">2.1. 创建<code>repo</code></a></li>
+<li><a href="#22-clone%E8%87%B3%E6%9C%AC%E5%9C%B0">2.2. <code>clone</code>至本地</a></li>
+</ul>
+</li>
+<li><a href="#3-huge">3. <code>Huge</code></a>
+<ul>
+<li><a href="#31-huge%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85">3.1. <code>Huge</code>下载/安装</a></li>
+<li><a href="#32-%E4%B8%BB%E9%A2%98%E6%A8%A1%E6%9D%BF">3.2. 主题模板</a>
+<ul>
+<li><a href="#321-%E9%80%89%E6%8B%A9">3.2.1. 选择</a></li>
+<li><a href="#322-%E5%AE%89%E8%A3%85">3.2.2. 安装</a></li>
+<li><a href="#323-%E5%88%A0%E9%99%A4">3.2.3. 删除</a></li>
+</ul>
+</li>
+<li><a href="#33-%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87">3.3. 创建第一篇博文</a></li>
+<li><a href="#34-%E6%B5%8B%E8%AF%95">3.4. 测试</a></li>
+<li><a href="#35-%E5%8F%91%E5%B8%83">3.5. 发布</a></li>
+</ul>
+</li>
+<li><a href="#4-%E5%8F%91%E5%B8%83%E5%88%B0githubio%E6%9C%AA%E6%B5%8B%E8%AF%95%E6%88%90%E5%8A%9F">4. 发布到<code>github.io</code>（未测试成功）</a></li>
+<li><a href="#5-%E4%B8%80%E4%BA%9B%E5%90%8E%E7%BB%AD%E6%83%B3%E6%B3%95">5. 一些后续想法</a></li>
+</ul>
+<!-- raw HTML omitted -->
+<h1 id="1-准备工作">1. 准备工作</h1>
+<h2 id="11-选择合适的markdown编辑器">1.1. 选择合适的<code>markdown</code>编辑器</h2>
+<p>可以选用以下编辑器：</p>
+<ul>
+<li><code>VSCode</code> + （扩展）<code>Markdown All in One</code>、<code>Markdown Preview Enhanced</code></li>
+<li><code>Typora</code></li>
+<li><code>Obsidian</code></li>
+</ul>
+<p>推荐使用第一种，虽然所见即所得的特性差一点，但免费。相关扩展也可以辅助生成标题编号。</p>
+<h1 id="2-github与repo">2. <code>Github</code>与<code>repo</code></h1>
+<h2 id="21-创建repo">2.1. 创建<code>repo</code></h2>
+<p>需要创建<strong>2个</strong><code>repo</code>。</p>
+<ol>
+<li>第1个<strong>私有</strong>，用于保存<code>hugo</code>站点的配置信息与<code>blog</code>源文件；</li>
+<li>第2个<strong>公开</strong>，用于保存<code>hugo</code>发布生成的结果，也就是真正的<code>Github Pages</code>，公开供外部访问的页面。</li>
+</ol>
+<p>私有<code>repo</code>名字随意，不过推荐使用<code>private.github.io</code>，明确和公开<code>repo</code>的关联。</p>
+<p>公开<code>repo</code>是名字以个人用户名开头的<code>repo</code>，即<code>&lt;account&gt;.github.io</code>。例如本人的<code>github account id</code>为<code>starvii</code>，需要创建名为<code>starvii.github.io</code>的<code>repo</code></p>
+<h2 id="22-clone至本地">2.2. <code>clone</code>至本地</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone git@github.com:starvii/private.github.io.git ~/src/github/blog/private
+</span></span><span style="display:flex;"><span>git clone git@github.com:starvii/starvii.github.io.git ~/src/github/blog/public
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 注意：此处路径请根据实际情况修改</span>
+</span></span></code></pre></div><h1 id="3-huge">3. <code>Huge</code></h1>
+<p><code>Huge</code>不是【胡歌/胡戈】，而是【雨果】。原因是这个单词来自法语，法语中<code>h</code>是不发音的。</p>
+<h2 id="31-huge下载安装">3.1. <code>Huge</code>下载/安装</h2>
+<p><code>https://github.com/gohugoio/hugo/releases/</code>挑选合适的版本下载吧。</p>
+<p>下载完成后解压到合适目录位置。</p>
+<p><code>MacOS</code>或部分<code>Linux</code>发行版可命令行直接安装，请参考<code>Hugo</code>官方手册，此处不再赘述。</p>
+<h2 id="32-主题模板">3.2. 主题模板</h2>
+<h3 id="321-选择">3.2.1. 选择</h3>
+<p><code>Hugo</code>官网提供了许多主题模板，<code>https://themes.gohugo.io/</code>。请自行选择合适的主题。</p>
+<p>对与我个人来说，喜欢简洁主题，因此可以使用<code>tags</code>：<code>https://themes.gohugo.io/tags/minimal/</code>来挑选。</p>
+<p>本次研究选用<a href="https://themes.gohugo.io/themes/simplog/">simplog</a>作为主题。</p>
+<h3 id="322-安装">3.2.2. 安装</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd ~/src/github/blog/private
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 建立新站点</span>
+</span></span><span style="display:flex;"><span>hugo new site .
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 加入主题</span>
+</span></span><span style="display:flex;"><span>git submodule add https://github.com/michimani/simplog.git ./themes/simplog
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 注意：此处使用了git submodule功能，需要良好的网络环境支持。</span>
+</span></span></code></pre></div><h3 id="323-删除">3.2.3. 删除</h3>
+<p><code>Hugo</code>使用<code>git submodule</code>来管理模板，所以删除模板也必须使用相应的功能。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git submodule deinit -f ./themes/simplog
+</span></span><span style="display:flex;"><span>git rm -f --cached ./themes/simplog
+</span></span></code></pre></div><p>hugo server -t simplog -D</p>
+<h2 id="33-创建第一篇博文">3.3. 创建第一篇博文</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new posts/about-me.md
+</span></span></code></pre></div><p><code>about-me.md</code>文件会出现在<code>./content/posts</code>中。</p>
+<p>使用<code>markdown</code>编辑器对文件进行编辑。注意自动生成的几行内容请勿删除。是<code>hugo</code>需要用到的元数据。</p>
+<h2 id="34-测试">3.4. 测试</h2>
+<p>使用以下命令开启测试服务：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo server -D
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -D 参数可以监测变化。</span>
+</span></span></code></pre></div><p>然后访问<code>http://localhost:1313</code>即可观察生成的站点。</p>
+<p>如果需要测试某个特定的主题，可使用以下命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo server -t <span style="color:#e6db74">&#39;&lt;theme name&gt;&#39;</span> -D
+</span></span><span style="display:flex;"><span>hugo server -t terminal -D
+</span></span></code></pre></div><h2 id="35-发布">3.5. 发布</h2>
+<p>根据官方手册，<code>hugo 10.0</code>之后的版本使用<code>hugo.toml</code>作为配置文件。之前的为<code>config.toml</code>。但运行时可以根据参数指定，影响不大。</p>
+<p>原始<code>hugo.toml</code>文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span><span style="color:#a6e22e">baseURL</span> = <span style="color:#e6db74">&#39;http://example.org/&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">languageCode</span> = <span style="color:#e6db74">&#39;en-us&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">title</span> = <span style="color:#e6db74">&#39;My New Hugo Site&#39;</span>
+</span></span></code></pre></div><p>修改<code>hugo.toml</code>文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span><span style="color:#a6e22e">publishdir</span> = <span style="color:#e6db74">&#39;../public/&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">baseURL</span> = <span style="color:#e6db74">&#39;https://starvii.github.io/&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">languageCode</span> = <span style="color:#e6db74">&#39;zh-CN&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">title</span> = <span style="color:#e6db74">&#39;星落园&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">theme</span> = <span style="color:#e6db74">&#39;simplog&#39;</span>
+</span></span></code></pre></div><p>添加了主题<code>theme</code>和发布路径<code>publishdir</code>字段，请根据实际情况填写。</p>
+<p>运行以下命令发布（不带任何参数）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo
+</span></span></code></pre></div><p>发布完成后，可在<code>~/src/github/blog/public</code>目录中找到生成的静态网站文件。</p>
+<h1 id="4-发布到githubio未测试成功">4. 发布到<code>github.io</code>（未测试成功）</h1>
+<p>根据官方教程<code>https://gohugo.io/hosting-and-deployment/hosting-on-github/</code>，创建<code>.github/workflows/hugo.yaml</code>文件，</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd ~/src/github/blog/private
+</span></span><span style="display:flex;"><span>git add * <span style="color:#f92672">&amp;&amp;</span> git commit -a <span style="color:#f92672">&amp;&amp;</span> git push origin
+</span></span><span style="display:flex;"><span>cd ~/src/github/blog/public
+</span></span><span style="display:flex;"><span>git add * <span style="color:#f92672">&amp;&amp;</span> git commit -a <span style="color:#f92672">&amp;&amp;</span> git push origin
+</span></span></code></pre></div><p>发布成功后，可访问<code>&lt;account&gt;.github.io</code>观察结果。</p>
+<h1 id="5-一些后续想法">5. 一些后续想法</h1>
+<ul>
+<li>寻找对中文字体支持良好的模板。</li>
+<li>精简<code>css</code>等资源，或者使用<code>CDN</code>中的资源。</li>
+<li>除了生成结果外，<code>markdown</code>源码也可以自动发布到<code>public repo</code>。</li>
+<li><code>markdown</code>语法编写一些文档基本够用，但图片等资源往往依赖图床，一旦图床需要迁移或失效会比较麻烦。本人曾经开发过一个<a href="https://github.com/starvii/emd">emd</a>的项目，功能是把图片内容编码保存到<code>.md</code>文件中。这种做法虽然使得图片网络流量增大到原来的<code>4/3</code>，但整体更加清爽、可用性也获得提升，对流量不大的小网站来说是合适的。考虑将功能加入到<code>Hugo</code>。</li>
+</ul>
+
+
+
+
+
+
+<hr class="block-separater">
+
+
+
+
+
+
+
+
+
+
+<div class="content-footer-item neighbor">
+	
+	<div class="prev-post">Prev: <a href="/posts/about-me/">About Me</a></div>
+	
+	
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/single.js"></script>
+
+
+
+
+
+	</div><div id="content-footer" class="sub">
+  
+  <div class="credit">
+    Power by <a href="https://gohugo.io">Hugo</a> /
+    Theme <a href="https://github.com/michimani/simplog/">simplog</a> by <a href="https://github.com/michimani/">michimani</a>
+  </div>
+</div></body>
+
+</html>
